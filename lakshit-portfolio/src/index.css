@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Space+Grotesk:wght@500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-bg-main: var(--bg-main);
+  --color-bg-card: var(--bg-card);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent-color);
+  --color-border-main: var(--border-main);
+}
+
+
+:root {
+  --bg-main: #0a0d16;
+  --bg-card: #111625;
+  --text-main: #f7f8fb;
+  --text-muted: #94a3b8;
+  --border-main: rgba(255, 255, 255, 0.08);
+  --accent-color: #8b5cf6; /* Default Violet */
+}
+
+/* Attributes binding for Switchers */
+[data-theme="dark"] {
+  --bg-main: #0a0d16;
+  --bg-card: #111625;
+  --text-main: #f7f8fb;
+  --text-muted: #94a3b8;
+  --border-main: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] {
+  --bg-main: #f7f8fb;
+  --bg-card: #ffffff;
+  --text-main: #0a0d16;
+  --text-muted: #64748b;
+  --border-main: rgba(0, 0, 0, 0.08);
+}
+
+/* Accent Mapping logic */
+[data-accent="violet"] { --accent-color: #8b5cf6; }
+[data-accent="emerald"] { --accent-color: #10b981; }
+[data-accent="blue"] { --accent-color: #2f8fff; }
+
+/* Base Global Elements styling */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
