@@ -16,11 +16,12 @@ const SKILLS = [
   { name: "HTML5", icon: FaHtml5, note: "Semantic markup", color: "text-[#e34c26]" },
   { name: "CSS3", icon: BiLogoCss3, note: "Layout & animation", color: "text-[#264de4]" },
   { name: "JavaScript", icon: BiLogoJavascript, note: "ES6+", color: "text-[#f7df1e]" },
+  { name: "Tailwind CSS", icon: BiLogoTailwindCss, note: "Utility-first styling", color: "text-[#38bdf8]" },
   { name: "React.js", icon: FaReact, note: "Component UIs", color: "text-[#61dafb]" },
   { name: "Node.js", icon: FaNodeJs, note: "Runtime", color: "text-[#3c873a]" },
   { name: "Express.js", icon: SiExpress, note: "REST APIs", color: "text-text-main" },
   { name: "MongoDB", icon: BiLogoMongodb, note: "NoSQL data", color: "text-[#4db33d]" },
-  { name: "Tailwind CSS", icon: BiLogoTailwindCss, note: "Utility-first styling", color: "text-[#38bdf8]" },
+
 ];
  
 export default function Skills() {
