@@ -31,7 +31,7 @@ export default function Hero() {
             Yaduvanshi
           </h1>
 
-          <p className="mt-6 text-lg sm:text-xl text-muted max-w-xl leading-relaxed">
+          <p className="mt-6 text-lg sm:text-l text-muted max-w-xl leading-relaxed">
             MERN Stack Developer building fast, end-to-end web products —
             from <span className="text-ink font-medium">MongoDB</span> schemas
             to <span className="text-ink font-medium">React</span> interfaces,
