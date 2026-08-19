@@ -12,11 +12,11 @@ const PROJECTS = [
     featured: false
   },
   {
-    title: "Smart Leftover Food Analyzer",
-    description: "An AI-powered system utilizing Machine Learning and Digital Image Processing to estimate food freshness and instantly suggest creative recipes, reducing domestic food waste.",
-    tech: ["React.js", "Node.js", "MongoDB", "Python", "Machine Learning"],
-    liveUrl: "https://drive.google.com/file/d/1iZj_Uxxng1L2UYFeB2dgWV6U-mpQRHEq/view?usp=sharing",
-    githubUrl: "https://github.com/lakshityaduvanshi-dev/smart-leftover-food-analyzer",
+    title: "QuizDeck",
+    description: "QuizDeck — build categories, write questions, race the clock, climb the leaderboard.",
+    tech: ["React.js", "Node.js", "MongoDB", "Tailwind CSS", "Express.js"],
+    liveUrl: "https://quiz-game-1-tc20.onrender.com/",
+    githubUrl: "https://github.com/lakshityaduvanshi-dev/Quiz-game",
     featured: true
   },
 ];
