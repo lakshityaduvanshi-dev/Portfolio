@@ -2,23 +2,29 @@ import React, { useState } from 'react';
 import { FiMail, FiGithub, FiLinkedin, FiSend } from 'react-icons/fi';
 import { SectionHeading } from './Skills';
 
+// Environment variable read karega, fallback me aapka live Render backend URL hai
+const API_BASE_URL = 
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.REACT_APP_API_URL ||
+  'https://portfolio-2-7edw.onrender.com';
+
 export default function Contact() {
-  // 1. Inputs ki state manage karne ke liye
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 2. Form submission handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus('Sending...');
+    setLoading(true);
+    setStatus('Sending message...');
 
     try {
-      // Backend server ka URL (Agar Supabase ya custom server use kar rahe hain toh us hisab se endpoint badlein)
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -27,13 +33,15 @@ export default function Contact() {
       const data = await response.json();
       if (data.success) {
         setStatus('Message Sent Successfully! ✅');
-        setFormData({ name: '', email: '', message: '' }); // Clear Form
+        setFormData({ name: '', email: '', message: '' }); // Form clear
       } else {
-        setStatus('Something went wrong. ❌');
+        setStatus(data.error || 'Something went wrong. ❌');
       }
     } catch (error) {
-      console.error(error);
+      console.error('Fetch error:', error);
       setStatus('Failed to connect to server. ❌');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,7 +78,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* 3. Form submission update */}
           <form onSubmit={handleSubmit} className="space-y-4 bg-bg-card border border-border-main p-8 rounded-2xl relative">
             <div>
               <label className="block font-mono text-xs text-text-muted mb-2 uppercase">Name</label>
@@ -87,7 +94,7 @@ export default function Contact() {
             <div>
               <label className="block font-mono text-xs text-text-muted mb-2 uppercase">Email</label>
               <input 
-                type="type" 
+                type="email" 
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -109,8 +116,12 @@ export default function Contact() {
               ></textarea>
             </div>
             
-            <button type="submit" className="w-full py-3 bg-accent text-white font-medium rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-accent/20 cursor-pointer">
-              Send Message <FiSend />
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="w-full py-3 bg-accent text-white font-medium rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-accent/20 cursor-pointer disabled:opacity-50"
+            >
+              {loading ? 'Sending...' : 'Send Message'} <FiSend />
             </button>
 
             {status && <p className="text-xs font-mono mt-2 text-center text-accent">{status}</p>}
