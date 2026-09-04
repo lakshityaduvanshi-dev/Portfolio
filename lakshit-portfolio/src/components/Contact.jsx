@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { FiMail, FiGithub, FiLinkedin, FiSend } from 'react-icons/fi';
 import { SectionHeading } from './Skills';
 
-// Environment variable read karega, fallback me aapka live Render backend URL hai
-const API_BASE_URL = 
+// Environment variable read karega, fallback me aapka live Render backend URL hai.
+// .replace(/\/+$/, '') trailing slash(es) hata deta hai taaki double-slash URL na bane.
+const RAW_API_BASE_URL =
   (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) ||
-  process.env.NEXT_PUBLIC_API_URL ||
-  process.env.REACT_APP_API_URL ||
-  'https://portfolio-2-7edw.onrender.com';
+  'https://portfolio-3-a1gv.onrender.com';
+
+const API_BASE_URL = RAW_API_BASE_URL.replace(/\/+$/, '');
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -30,6 +31,15 @@ export default function Contact() {
         body: JSON.stringify(formData)
       });
 
+      // Agar server ne JSON ke bajaye HTML/kuch aur bheja (jaise 404 page),
+      // toh yeh check response.json() ke crash hone se pehle hi pakad lega.
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        console.error('Non-JSON response:', response.status, await response.text());
+        setStatus(`Server error (${response.status}). Please try again later. ❌`);
+        return;
+      }
+
       const data = await response.json();
       if (data.success) {
         setStatus('Message Sent Successfully! ✅');
@@ -49,7 +59,7 @@ export default function Contact() {
     <section id="contact" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeading eyebrow="Get in touch" title="Let's build something together" align="center" />
-        
+
         <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col justify-between space-y-8">
             <div>
@@ -81,43 +91,43 @@ export default function Contact() {
           <form onSubmit={handleSubmit} className="space-y-4 bg-bg-card border border-border-main p-8 rounded-2xl relative">
             <div>
               <label className="block font-mono text-xs text-text-muted mb-2 uppercase">Name</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full bg-bg-main border border-border-main rounded-xl p-3 text-text-main focus:outline-none focus:border-accent font-sans text-sm" 
-                placeholder="John Doe" 
-                required 
+                className="w-full bg-bg-main border border-border-main rounded-xl p-3 text-text-main focus:outline-none focus:border-accent font-sans text-sm"
+                placeholder="John Doe"
+                required
               />
             </div>
             <div>
               <label className="block font-mono text-xs text-text-muted mb-2 uppercase">Email</label>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full bg-bg-main border border-border-main rounded-xl p-3 text-text-main focus:outline-none focus:border-accent font-sans text-sm" 
-                placeholder="john@example.com" 
-                required 
+                className="w-full bg-bg-main border border-border-main rounded-xl p-3 text-text-main focus:outline-none focus:border-accent font-sans text-sm"
+                placeholder="john@example.com"
+                required
               />
             </div>
             <div>
               <label className="block font-mono text-xs text-text-muted mb-2 uppercase">Message</label>
-              <textarea 
-                rows="4" 
+              <textarea
+                rows="4"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full bg-bg-main border border-border-main rounded-xl p-3 text-text-main focus:outline-none focus:border-accent font-sans text-sm resize-none" 
-                placeholder="Your message here..." 
+                className="w-full bg-bg-main border border-border-main rounded-xl p-3 text-text-main focus:outline-none focus:border-accent font-sans text-sm resize-none"
+                placeholder="Your message here..."
                 required
               ></textarea>
             </div>
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               disabled={loading}
               className="w-full py-3 bg-accent text-white font-medium rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-accent/20 cursor-pointer disabled:opacity-50"
             >
