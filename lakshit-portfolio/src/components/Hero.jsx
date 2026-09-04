@@ -50,7 +50,7 @@ export default function Hero() {
               />
             </a>
             <a
-              href="/Lakshit yaduvanshi resume.pdf"
+              href="/Lakshit_Yaduvanshi_Resume.pdf"
               download="/Lakshit yaduvanshi resume.pdf"
               className="inline-flex items-center gap-2 border border-line text-ink font-medium text-sm px-6 py-3.5 rounded-xl hover:border-accent/60 hover:text-accent transition-colors"
             >
